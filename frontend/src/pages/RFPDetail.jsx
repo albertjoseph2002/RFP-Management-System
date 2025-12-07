@@ -17,6 +17,12 @@ function RFPDetail() {
         fetchProposals();
     }, [id]);
 
+    useEffect(() => {
+        if (activeTab === 'comparison') {
+            fetchComparison();
+        }
+    }, [activeTab, id]);
+
     const fetchRFP = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/api/rfps/${id}`);
@@ -62,15 +68,20 @@ function RFPDetail() {
         }
     };
 
-    const handleCompare = async () => {
+    const fetchComparison = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/api/rfps/${id}/comparison`);
             setComparison(response.data);
-            setActiveTab('comparison');
         } catch (error) {
-            console.error('Error generating comparison:', error);
-            alert('Failed to generate comparison');
+            console.error('Error fetching comparison:', error);
+            // Don't alert here to avoid spamming if just switching tabs and it fails silently (or maybe it should alert?)
+            // For now, let's keep it simple.
         }
+    };
+
+    const handleCompare = async () => {
+        await fetchComparison();
+        setActiveTab('comparison');
     };
 
     if (!rfp) return <div>Loading...</div>;
