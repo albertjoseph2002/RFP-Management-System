@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment
+.env
+backend/.env
+frontend/.env
+error.txt
+backend.log
+backend_debug*
+verify.log
+
+# IDE
+.vscode/
+.idea/
+
+# Build
+dist/
+build/
+
+# OpenAI verification scripts
+verify_openai.js
+backend/verify_openai.js
